@@ -1,5 +1,12 @@
 # Autoencoder
 ```python
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Aug 17 22:10:12 2021
+
+@author: talha
+"""
+
 #import
 from matplotlib.pyplot import imshow
 import numpy as np
@@ -63,20 +70,23 @@ input_data = np.reshape(gray_image, (len(gray_image), 128, 128, 1))
 
 #Build Model
 model = Sequential()
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=(128, 128, 1)))
-model.add(MaxPooling2D((2, 2), padding='same'))
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
-model.add(MaxPooling2D((2, 2), padding='same'))
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
- 
+model.add(Conv2D(64, (3, 3), activation='relu', padding='same',strides=2,  input_shape=(128, 128, 1)))
+model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(128, (3, 3), activation='relu', padding='same',strides=2))
 
-model.add(MaxPooling2D((2, 2), padding='same'))
+model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(256, (3, 3), activation='relu', padding='same',strides=2))
+
+model.add(Conv2D(128, (3,3), activation='relu', padding='same'))
+model.add(Conv2D(128, (3,3), activation='relu', padding='same'))
+
+model.add(Conv2D(64, (3,3), activation='relu', padding='same'))
  
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
 model.add(UpSampling2D((2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(16, (3, 3), activation='relu', padding='same'))
 model.add(UpSampling2D((2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(8, (3, 3), activation='relu', padding='same'))
 model.add(UpSampling2D((2, 2)))
 model.add(Conv2D(3, (3, 3), activation='relu', padding='same'))
 
@@ -89,7 +99,7 @@ model.summary()
 
 model.fit(input_data, output_data,
         validation_split=0.1,
-        epochs=10000,
+        epochs=1000,
         batch_size=16,
         shuffle=True)
 
@@ -105,7 +115,7 @@ pred = model.predict(test_img)
 imshow(pred[0].reshape(128,128,3), cmap="binary")
 
 #Save Model
-model.save('imagecolorization_autoencoder.model')
+# model.save('imagecolorization_autoencoder.model')
 ```
 
 **for any problem , don't hesitate to contact me from** [Linkedin](https://www.linkedin.com/in/mntalhakilic/) :+1: :+1:
