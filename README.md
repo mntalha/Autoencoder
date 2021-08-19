@@ -1,4 +1,8 @@
 # Autoencoder
+
+## We start with image colorization by using AutoEncoder technics
+
+
 ```python
 # -*- coding: utf-8 -*-
 """
